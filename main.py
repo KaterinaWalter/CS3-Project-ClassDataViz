@@ -74,3 +74,22 @@ plt.title('Correlation Heatmap of Personality Traits')
 plt.tight_layout()
 plt.savefig('bigfive_heatmap.png', bbox_inches='tight')
 plt.close() 
+
+# CATEGORICAL PLOT (grouped bar chart)
+barWidth = 0.2
+colors = df['Hex Color'].dropna().tolist()
+r1 = np.arange(8)
+r2 = r1 + barWidth
+r3 = r2 + barWidth
+
+fig, ax = plt.subplots(dpi=300)
+ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='WebDev')
+ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Java')
+ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Python')
+
+ax.set_xticks(r1 + barWidth)
+ax.set_xticklabels(df['Name'].head(8))
+# ax.legend() # TODO: fix legend to show language names
+plt.title('Programming Language Ratings by Student')
+plt.savefig('rating_bar.png', bbox_inches='tight')
+plt.close()
