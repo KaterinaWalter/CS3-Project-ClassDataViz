@@ -7,6 +7,7 @@ plt.style.use('seaborn-v0_8-pastel')
 
 # Read CSV into DataFrame
 df = pd.read_csv('class-data-v1.csv')
+df = df.head(8) # Limit to first 8 rows for our class
 
 # NOTE: some cols need type converted (object -> datetime, boolean)
 df['Birthdate'] = pd.to_datetime(df['Birthdate']) 
