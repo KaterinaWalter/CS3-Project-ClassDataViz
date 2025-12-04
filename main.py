@@ -58,6 +58,12 @@ plt.title('How Early Students Wake Up vs Commute Time')
 m, b = np.polyfit(df['Commute Time Minutes'].dropna(), df['Wakeup Before School'].dropna(), 1)
 # Plot line of best fit
 plt.plot(df['Commute Time Minutes'], m*df['Commute Time Minutes'] + b, color='red')
+# Add a figure caption below the plot
+# The coordinates (0.5, 0.02) place the text near the bottom center of the figure
+# ha='center' ensures the text is horizontally centered at x=0.5
+# fontsize and color are optional styling parameters
+plt.figtext(0.5, 0.02, "Positive linear trend shown between how long people wake up before 8:15AM and the time it takes to get to school.", 
+            ha='center', fontsize=10, color='gray') 
 plt.savefig('wakeup_scatter.png', bbox_inches='tight')
 plt.close()
 
