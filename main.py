@@ -84,27 +84,27 @@ plt.savefig('bigfive_heatmap.png', bbox_inches='tight')
 plt.close() 
 
 # CATEGORICAL PLOT (grouped bar chart)
-barWidth = 0.2
+barWidth = 0.5
 colors = df['Hex Color'].dropna().tolist()
-r1 = np.arange(8)
+r1 = np.arange(8) * (barWidth * 3.5)  # space each student
 r2 = r1 + barWidth
 r3 = r2 + barWidth
 
-fig, ax = plt.subplots(dpi=300)
-bars1 = ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='WebDev')
-bars2 = ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Java')
-bars3 = ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Python')
+fig, ax = plt.subplots(figsize=(10, 7), dpi=300)
+bars1 = ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='white', label='WebDev')
+bars2 = ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='white', label='Java')
+bars3 = ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='white', label='Python')
 
 ax.set_xticks(r1 + barWidth)
 ax.set_xticklabels(df['Name'].head(8))
 plt.title('Programming Language Ratings by Student')
 
 # Add icons above each bar group
-icon_paths = ['java-emoji.png', 'java-emoji.png', 'java-emoji.png']
+icon_paths = ['webdev-emoji.png', 'java-emoji.png', 'python-emoji.png']
 for bars, icon in zip([bars1, bars2, bars3], icon_paths):
     for bar in bars:
         img = plt.imread(icon)
-        ax.add_artist(AnnotationBbox(OffsetImage(img, zoom=0.05), 
+        ax.add_artist(AnnotationBbox(OffsetImage(img, zoom=0.02), 
                                       (bar.get_x() + bar.get_width()/2, bar.get_height()), 
                                       xybox=(0, 10), boxcoords="offset points", frameon=False))
 
