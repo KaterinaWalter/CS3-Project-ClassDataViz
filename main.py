@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # Set style theme
 plt.style.use('seaborn-v0_8-pastel')
@@ -90,13 +91,22 @@ r2 = r1 + barWidth
 r3 = r2 + barWidth
 
 fig, ax = plt.subplots(dpi=300)
-ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='WebDev')
-ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Java')
-ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Python')
+bars1 = ax.bar(r1, df['Webdev Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='WebDev')
+bars2 = ax.bar(r2, df['Java Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Java')
+bars3 = ax.bar(r3, df['Python Rating'].dropna(), color=colors, width=barWidth, edgecolor='black', label='Python')
 
 ax.set_xticks(r1 + barWidth)
 ax.set_xticklabels(df['Name'].head(8))
-# ax.legend() # TODO: fix legend to show language names
 plt.title('Programming Language Ratings by Student')
+
+# Add icons above each bar group
+icon_paths = ['java-emoji.png', 'java-emoji.png', 'java-emoji.png']
+for bars, icon in zip([bars1, bars2, bars3], icon_paths):
+    for bar in bars:
+        img = plt.imread(icon)
+        ax.add_artist(AnnotationBbox(OffsetImage(img, zoom=0.05), 
+                                      (bar.get_x() + bar.get_width()/2, bar.get_height()), 
+                                      xybox=(0, 10), boxcoords="offset points", frameon=False))
+
 plt.savefig('rating_bar.png', bbox_inches='tight')
 plt.close()
